@@ -15,23 +15,74 @@
 -->
 
 <favorites xmlns:launcher="http://schemas.android.com/apk/res-auto/com.android.launcher3">
+    <!-- Far-left screen [0] -->
 
-    <!-- Hotseat -->
-    <include launcher:workspace="@xml/dw_tablet_hotseat" />
+    <!-- Left screen [1] -->
 
-    <!-- Bottom row -->
-    <favorite
+    <!-- Middle screen [2] -->
+    <!-- Right screen [3] -->
+    <!-- Far-right screen [4] -->
+
+    <!-- Hotseat (We use the screen as the position of the item in the hotseat) -->
+    <!-- Dialer, Contacts, [All Apps], Messaging, Browser -->
+    <resolve
+        launcher:container="-101"
         launcher:screen="0"
-        launcher:x="0"
-        launcher:y="4"
-        launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_CONTACTS;end" />
+        launcher:x="4"
+        launcher:y="0" >
+        <favorite
+            launcher:packageName="com.android.browser"
+            launcher:className="com.android.browser.BrowserActivity" />
+    </resolve>
 
     <resolve
-        launcher:screen="0"
-        launcher:x="5"
-        launcher:y="4" >
-        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_MARKET;end" />
-        <favorite launcher:uri="market://details?id=com.android.launcher" />
+        launcher:container="-101"
+        launcher:screen="1"
+        launcher:x="4"
+        launcher:y="0" >
+        <favorite
+            launcher:packageName="com.droidlogic.videoplayer"
+            launcher:className="com.droidlogic.videoplayer.FileList" />
+    </resolve>
+
+    <resolve
+        launcher:container="-101"
+        launcher:screen="2"
+        launcher:x="4"
+        launcher:y="0" >
+        <favorite
+            launcher:packageName="com.android.music"
+            launcher:className="com.android.music.MusicBrowserActivity" />
+    </resolve>
+
+    <resolve
+        launcher:container="-101"
+        launcher:screen="4"
+        launcher:x="4"
+        launcher:y="0" >
+        <favorite
+            launcher:packageName="com.android.gallery3d"
+            launcher:className="com.android.gallery3d.app.GalleryActivity" />
+    </resolve>
+
+    <resolve
+        launcher:container="-101"
+        launcher:screen="5"
+        launcher:x="4"
+        launcher:y="0" >
+        <favorite
+            launcher:packageName="com.droidlogic.FileBrower"
+            launcher:className="com.droidlogic.FileBrower.FileBrower" />
+    </resolve>
+
+    <resolve
+        launcher:container="-101"
+        launcher:screen="6"
+        launcher:x="4"
+        launcher:y="0" >
+        <favorite
+        launcher:packageName="com.android.settings"
+        launcher:className="com.android.settings.Settings" />
     </resolve>
 
 </favorites>
