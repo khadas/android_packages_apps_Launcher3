@@ -397,6 +397,7 @@ public class AllAppsGridAdapter extends RecyclerView.Adapter<AllAppsGridAdapter.
      * Sets the number of apps per row.
      */
     public void setNumAppsPerRow(int appsPerRow) {
+        appsPerRow = 6;
         mAppsPerRow = appsPerRow;
         mGridLayoutMgr.setSpanCount(appsPerRow);
     }
