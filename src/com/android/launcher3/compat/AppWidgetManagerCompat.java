@@ -75,7 +75,9 @@ public abstract class AppWidgetManagerCompat {
     public abstract String loadLabel(LauncherAppWidgetProviderInfo info);
 
     public abstract boolean bindAppWidgetIdIfAllowed(
-            int appWidgetId, AppWidgetProviderInfo info, Bundle options);
+        int appWidgetId, AppWidgetProviderInfo info, Bundle options);
+    
+    public abstract boolean bindAppWidgetIdSkipBindPermission(int appWidgetId,AppWidgetProviderInfo info,Bundle options );
 
     public abstract UserHandleCompat getUser(LauncherAppWidgetProviderInfo info);
 
@@ -93,4 +95,8 @@ public abstract class AppWidgetManagerCompat {
             ComponentName provider, UserHandleCompat user);
 
     public abstract HashMap<ComponentKey, AppWidgetProviderInfo> getAllProvidersMap();
+
+    public abstract void setBindAppWidgetPermission();
+
+
 }

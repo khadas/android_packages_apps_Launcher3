@@ -34,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.util.Log;
 
 import com.android.launcher3.compat.AppWidgetManagerCompat;
 
@@ -137,7 +138,7 @@ public class QsbContainerView extends FrameLayout {
                 }
 
                 widgetId = widgetHost.allocateAppWidgetId();
-                isWidgetBound = widgetManager.bindAppWidgetIdIfAllowed(widgetId, mWidgetInfo, opts);
+                isWidgetBound = widgetManager.bindAppWidgetIdSkipBindPermission(widgetId, mWidgetInfo, opts);
                 if (!isWidgetBound) {
                     widgetHost.deleteAppWidgetId(widgetId);
                     widgetId = -1;
@@ -152,9 +153,14 @@ public class QsbContainerView extends FrameLayout {
 
                 if (!Utilities.containsAll(AppWidgetManager.getInstance(launcher)
                         .getAppWidgetOptions(widgetId), opts)) {
+                try{
                     mQsb.updateAppWidgetOptions(opts);
+                }catch(Exception e){
+                   Log.v("QsbContainerView", "getQsbBar error "+e.getMessage());
+                   return null; 
                 }
-                mQsb.setPadding(0, 0, 0, 0);
+                }
+                    mQsb.setPadding(0, 0, 0, 0);
                 return mQsb;
             }
 

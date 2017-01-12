@@ -411,6 +411,7 @@ public class Launcher extends Activity
         mStateTransitionAnimation = new LauncherStateTransitionAnimation(this, mAllAppsController);
 
         mAppWidgetManager = AppWidgetManagerCompat.getInstance(this);
+       // mAppWidgetManager.setBindAppWidgetPermission();
 
         mAppWidgetHost = new LauncherAppWidgetHost(this, APPWIDGET_HOST_ID);
         mAppWidgetHost.startListening();
@@ -2216,7 +2217,7 @@ public class Launcher extends Activity
             appWidgetId = getAppWidgetHost().allocateAppWidgetId();
             Bundle options = info.bindOptions;
 
-            boolean success = mAppWidgetManager.bindAppWidgetIdIfAllowed(
+            boolean success = mAppWidgetManager.bindAppWidgetIdSkipBindPermission(
                     appWidgetId, info.info, options);
             if (success) {
                 addAppWidgetFromDropImpl(appWidgetId, info, null, info.info);
@@ -3837,7 +3838,7 @@ public class Launcher extends Activity
                         }
                         options = newOptions;
                     }
-                    boolean success = mAppWidgetManager.bindAppWidgetIdIfAllowed(
+                    boolean success = mAppWidgetManager.bindAppWidgetIdSkipBindPermission(
                             item.appWidgetId, appWidgetInfo, options);
 
                     // We tried to bind once. If we were not able to bind, we would need to

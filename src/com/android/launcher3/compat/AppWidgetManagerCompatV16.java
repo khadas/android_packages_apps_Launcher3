@@ -65,6 +65,11 @@ class AppWidgetManagerCompatV16 extends AppWidgetManagerCompat {
     }
 
     @Override
+    public  boolean bindAppWidgetIdSkipBindPermission(int appWidgetId,AppWidgetProviderInfo info,Bundle options ){
+          return mAppWidgetManager.bindAppWidgetIdSkipBindPermission(appWidgetId,info.provider,options,true);
+    }
+
+    @Override
     public UserHandleCompat getUser(LauncherAppWidgetProviderInfo info) {
         return UserHandleCompat.myUserHandle();
     }
@@ -114,5 +119,11 @@ class AppWidgetManagerCompatV16 extends AppWidgetManagerCompat {
             result.put(new ComponentKey(info.provider, user), info);
         }
         return result;
+    }
+    @Override
+    public void setBindAppWidgetPermission(){
+
+        mAppWidgetManager.setBindAppWidgetPermission("com.android.launcher3",
+                            true);
     }
 }

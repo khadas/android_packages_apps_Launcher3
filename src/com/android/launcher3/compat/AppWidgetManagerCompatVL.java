@@ -80,6 +80,11 @@ class AppWidgetManagerCompatVL extends AppWidgetManagerCompat {
                 appWidgetId, info.getProfile(), info.provider, options);
     }
 
+      @Override
+    public  boolean bindAppWidgetIdSkipBindPermission(int appWidgetId,AppWidgetProviderInfo info,Bundle options ){
+          return mAppWidgetManager.bindAppWidgetIdSkipBindPermission(appWidgetId,info.provider,options,true);
+    }
+
     @Override
     public UserHandleCompat getUser(LauncherAppWidgetProviderInfo info) {
         if (info.isCustomWidget) {
@@ -171,5 +176,11 @@ class AppWidgetManagerCompatVL extends AppWidgetManagerCompat {
             }
         }
         return result;
+    }
+     @Override
+    public void setBindAppWidgetPermission(){
+
+        mAppWidgetManager.setBindAppWidgetPermission("com.android.launcher3",
+                            true);
     }
 }
