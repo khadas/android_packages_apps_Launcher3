@@ -85,6 +85,7 @@ public class PackageManagerHelper {
      */
     public static String getWallpaperPickerPackage(PackageManager pm) {
         ArrayList<String> excludePackages = new ArrayList<>();
+	ArrayList<String> canHandledPackages = new ArrayList<>();
         // Exclude packages which contain an image picker
         for (ResolveInfo info : pm.queryIntentActivities(
                 new Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), 0)) {
@@ -94,12 +95,13 @@ public class PackageManagerHelper {
 
         for (ResolveInfo info : pm.queryIntentActivities(
                 new Intent(Intent.ACTION_SET_WALLPAPER), 0)) {
+	    canHandledPackages.add(info.activityInfo.packageName);
             if (!excludePackages.contains(info.activityInfo.packageName) &&
                     (info.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
                 return info.activityInfo.packageName;
             }
         }
-        return excludePackages.get(0);
+        return canHandledPackages.get(0);
     }
 
     /**
