@@ -28,9 +28,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
-
+import android.util.Log;
 import com.android.launcher3.config.FeatureFlags;
-
+import android.content.res.Configuration;
 import java.util.ArrayList;
 
 public class DeviceProfile {
@@ -38,7 +38,6 @@ public class DeviceProfile {
     public interface LauncherLayoutChangeListener {
         void onLauncherLayoutChanged();
     }
-
     public final InvariantDeviceProfile inv;
 
     // Device properties
@@ -128,6 +127,7 @@ public class DeviceProfile {
 
     // Listeners
     private ArrayList<LauncherLayoutChangeListener> mListeners = new ArrayList<>();
+    private Context mContext;
 
     public DeviceProfile(Context context, InvariantDeviceProfile inv,
             Point minSize, Point maxSize,
@@ -135,6 +135,7 @@ public class DeviceProfile {
 
         this.inv = inv;
         this.isLandscape = isLandscape;
+        mContext = context;
 
         Resources res = context.getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -529,6 +530,7 @@ public class DeviceProfile {
         if (pageIndicator != null) {
             lp = (FrameLayout.LayoutParams) pageIndicator.getLayoutParams();
             if (isVerticalBarLayout()) {
+                boolean isLandScape = mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
                 if (mInsets.left > 0) {
                     lp.leftMargin = mInsets.left + pageIndicatorLandGutterLeftNavBarPx -
                             lp.width - pageIndicatorLandWorkspaceOffsetPx;
@@ -536,7 +538,8 @@ public class DeviceProfile {
                     lp.leftMargin = pageIndicatorLandGutterRightNavBarPx - lp.width -
                             pageIndicatorLandWorkspaceOffsetPx;
                 }
-                lp.bottomMargin = workspacePadding.bottom;
+                if(!isLandScape)
+                    lp.bottomMargin = workspacePadding.bottom;
             } else {
                 // Put the page indicators above the hotseat
                 lp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
