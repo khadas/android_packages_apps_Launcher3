@@ -2641,19 +2641,16 @@ public class Launcher extends Activity
             Toast.makeText(this, R.string.msg_disabled_by_admin, Toast.LENGTH_SHORT).show();
             return;
         }
-
         String pickerPackage = getString(R.string.wallpaper_picker_package);
-        if (TextUtils.isEmpty(pickerPackage)) {
-            pickerPackage =  PackageManagerHelper.getWallpaperPickerPackage(getPackageManager());
-        }
-
         int pageScroll = mWorkspace.getScrollForPage(mWorkspace.getPageNearestToCenterOfScreen());
         float offset = mWorkspace.mWallpaperOffset.wallpaperOffsetForScroll(pageScroll);
-
         setWaitingForResult(new PendingRequestArgs(new ItemInfo()));
-        Intent intent = new Intent(Intent.ACTION_SET_WALLPAPER)
-                .setPackage(pickerPackage)
-                .putExtra(Utilities.EXTRA_WALLPAPER_OFFSET, offset);
+        Intent intent = new Intent(Intent.ACTION_SET_WALLPAPER).putExtra(Utilities.EXTRA_WALLPAPER_OFFSET, offset);
+        if(!TextUtils.isEmpty(pickerPackage)){
+            intent.setPackage(pickerPackage);
+            if(intent.resolveActivity(getPackageManager()) == null)
+                intent.setPackage(null);
+        }
         intent.setSourceBounds(getViewBounds(v));
         startActivityForResult(intent, REQUEST_PICK_WALLPAPER, getActivityLaunchOptions(v));
     }
