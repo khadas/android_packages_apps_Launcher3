@@ -25,15 +25,6 @@
 
     <!-- Hotseat (We use the screen as the position of the item in the hotseat) -->
     <!-- Dialer, Contacts, [All Apps], Messaging, Browser -->
-    <resolve
-        launcher:container="-101"
-        launcher:screen="0"
-        launcher:x="4"
-        launcher:y="0" >
-        <favorite
-            launcher:packageName="com.android.browser"
-            launcher:className="com.android.browser.BrowserActivity" />
-    </resolve>
 
     <resolve
         launcher:container="-101"
@@ -75,14 +66,5 @@
             launcher:className="com.droidlogic.FileBrower.FileBrower" />
     </resolve>
 
-    <resolve
-        launcher:container="-101"
-        launcher:screen="6"
-        launcher:x="4"
-        launcher:y="0" >
-        <favorite
-        launcher:packageName="com.android.settings"
-        launcher:className="com.android.settings.Settings" />
-    </resolve>
 
 </favorites>
