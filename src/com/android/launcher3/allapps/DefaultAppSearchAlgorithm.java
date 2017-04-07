@@ -16,18 +16,21 @@
 package com.android.launcher3.allapps;
 
 import android.os.Handler;
+import android.util.Log;
 
 import com.android.launcher3.AppInfo;
 import com.android.launcher3.util.ComponentKey;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The default search implementation.
  */
 public class DefaultAppSearchAlgorithm {
-
+    private static final String TAG="DefaultAppSearchAlgorithm";
     private final List<AppInfo> mApps;
     protected final Handler mResultHandler;
 
@@ -92,6 +95,14 @@ public class DefaultAppSearchAlgorithm {
                 return true;
             }
         }
+        //for Chinese search
+        if(isContainChinese(query))
+        {
+            if(title.contains(query))
+            {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -133,4 +144,15 @@ public class DefaultAppSearchAlgorithm {
                 return false;
         }
     }
+
+    protected  boolean isContainChinese(String str) {
+
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
+    }
+
 }
