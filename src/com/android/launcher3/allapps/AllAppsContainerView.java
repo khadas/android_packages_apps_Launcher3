@@ -137,7 +137,6 @@ public class AllAppsContainerView extends BaseContainerView implements DragSourc
     @Thunk AlphabeticalAppsList mApps;
     private AllAppsGridAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.ItemDecoration mItemDecoration;
 
     @Thunk View mContent;
     @Thunk View mContainerView;
@@ -183,7 +182,6 @@ public class AllAppsContainerView extends BaseContainerView implements DragSourc
         mAdapter = new AllAppsGridAdapter(mLauncher, mApps, this, mLauncher, this);
         mApps.setAdapter(mAdapter);
         mLayoutManager = mAdapter.getLayoutManager();
-        mItemDecoration = mAdapter.getItemDecoration();
         mRecyclerViewTopBottomPadding =
                 res.getDimensionPixelSize(R.dimen.all_apps_list_top_bottom_padding);
 
@@ -319,9 +317,6 @@ public class AllAppsContainerView extends BaseContainerView implements DragSourc
         mAppsRecyclerView.setLayoutManager(mLayoutManager);
         mAppsRecyclerView.setAdapter(mAdapter);
         mAppsRecyclerView.setHasFixedSize(true);
-        if (mItemDecoration != null) {
-            mAppsRecyclerView.addItemDecoration(mItemDecoration);
-        }
 
         updateBackgroundAndPaddings();
     }
