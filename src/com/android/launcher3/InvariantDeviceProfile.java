@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import android.os.SystemProperties;
 
 public class InvariantDeviceProfile {
 
@@ -170,15 +171,19 @@ public class InvariantDeviceProfile {
         portraitProfile = new DeviceProfile(context, this, smallestSize, largestSize,
                 smallSide, largeSide, false /* isLandscape */);
 
-        // We need to ensure that there is enough extra space in the wallpaper
-        // for the intended parallax effects
-        if (context.getResources().getConfiguration().smallestScreenWidthDp >= 720) {
-            defaultWallpaperSize = new Point(
-                    (int) (largeSide * wallpaperTravelToScreenWidthRatio(largeSide, smallSide)),
-                    largeSide);
-        } else {
-            defaultWallpaperSize = new Point(Math.max(smallSide * 2, largeSide), largeSide);
-        }
+	if("true".equals(SystemProperties.get("ro.wallpaper.fixsize"))){
+		defaultWallpaperSize = new Point(largeSide, largeSide);
+	}else{		
+        	// We need to ensure that there is enough extra space in the wallpaper
+        	// for the intended parallax effects
+        	if (context.getResources().getConfiguration().smallestScreenWidthDp >= 720) {
+        	    defaultWallpaperSize = new Point(
+        	            (int) (largeSide * wallpaperTravelToScreenWidthRatio(largeSide, smallSide)),
+        	            largeSide);
+        	} else {
+        	    defaultWallpaperSize = new Point(Math.max(smallSide * 2, largeSide), largeSide);
+        	}
+	}
     }
 
     ArrayList<InvariantDeviceProfile> getPredefinedDeviceProfiles(Context context) {
