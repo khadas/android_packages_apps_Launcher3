@@ -43,6 +43,7 @@ import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.util.Thunk;
+import android.text.TextUtils.TruncateAt;
 
 import java.util.HashMap;
 import java.util.List;
@@ -461,6 +462,8 @@ public class AllAppsGridAdapter extends RecyclerView.Adapter<AllAppsGridAdapter.
                 icon.setLongPressTimeout(ViewConfiguration.get(parent.getContext())
                         .getLongPressTimeout());
                 icon.setFocusable(true);
+                icon.setEllipsize(TruncateAt.MARQUEE);
+                icon.setMaxEms(8);
                 return new ViewHolder(icon);
             }
             case PREDICTION_ICON_VIEW_TYPE: {
@@ -501,6 +504,9 @@ public class AllAppsGridAdapter extends RecyclerView.Adapter<AllAppsGridAdapter.
             case ICON_VIEW_TYPE: {
                 AppInfo info = mApps.getAdapterItems().get(position).appInfo;
                 BubbleTextView icon = (BubbleTextView) holder.mContent;
+
+                icon.setEllipsize(TruncateAt.MARQUEE);
+                icon.setMaxEms(8);
                 icon.applyFromApplicationInfo(info);
                 break;
             }
