@@ -26,6 +26,8 @@ import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -126,6 +128,8 @@ public class QsbContainerView extends FrameLayout {
             opts.putInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, size.top);
             opts.putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH, size.right);
             opts.putInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, size.bottom);
+            opts.putString("attached-launcher-identifier", "com.android.launcher3");
+            opts.putString("requested-widget-style", "cqsb");
 
             int widgetId = Utilities.getPrefs(activity).getInt(QSB_WIDGET_ID, -1);
             AppWidgetProviderInfo widgetInfo = widgetManager.getAppWidgetInfo(widgetId);
@@ -270,6 +274,27 @@ public class QsbContainerView extends FrameLayout {
         protected AppWidgetHostView onCreateView(
                 Context context, int appWidgetId, AppWidgetProviderInfo appWidget) {
             return new QsbWidgetHostView(context);
+        }
+    }
+
+    public static void updateDefaultLayout(Context context, AppWidgetProviderInfo info) {
+        ComponentName provider = info.provider;
+        if (provider.getClassName().equals(
+            "com.google.android.googlequicksearchbox.SearchWidgetProvider")) {
+            try {
+                ActivityInfo activityInfo =
+                    context.getPackageManager().getReceiverInfo(provider,
+                        PackageManager.GET_META_DATA);
+                Bundle metaData = activityInfo.metaData;
+                int resId = metaData.getInt(
+                    "com.google.android.gsa.searchwidget.alt_initial_layout_cqsb", -1);
+                if (resId != -1) {
+                    info.initialLayout = resId;
+                }
+            } catch (Exception e) {
+                // Ignore the exception since if any exceptions happen the original initialyLayout
+                // would be used.
+            }
         }
     }
 }
