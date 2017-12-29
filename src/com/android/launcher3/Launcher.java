@@ -1566,7 +1566,10 @@ public class Launcher extends BaseActivity
                     }
                 }
                 mIsResumeFromActionScreenOff = true;
+            } else if ("action.launcher.application.menu".equals(action)) {
+               showAppsView(true , true , false);
             }
+
         }
     };
 
@@ -1595,6 +1598,7 @@ public class Launcher extends BaseActivity
         // Listen for broadcasts related to user-presence
         final IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction("action.launcher.application.menu");
         registerReceiver(mReceiver, filter);
         FirstFrameAnimatorHelper.initializeDrawListener(getWindow().getDecorView());
         mAttached = true;
@@ -2942,6 +2946,11 @@ public class Launcher extends BaseActivity
 
     private void setState(State state) {
         this.mState = state;
+        if (mState == State.WORKSPACE) {
+            Utilities.setSystemProperty("sys.launcher.state","1");
+        } else {
+            Utilities.setSystemProperty("sys.launcher.state","0");
+        }
         updateSoftInputMode();
     }
 
