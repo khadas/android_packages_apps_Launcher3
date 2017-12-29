@@ -19,25 +19,14 @@
     <!-- Messaging, Email, Browser, [All Apps], Music, Gallery, Camera -->
     <resolve
         launcher:container="-101"
-        launcher:screen="0"
-        launcher:x="0"
+        launcher:screen="3"
+        launcher:x="3"
         launcher:y="0" >
-        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_MESSAGING;end" />
-        <favorite launcher:uri="sms:" />
-        <favorite launcher:uri="smsto:" />
-        <favorite launcher:uri="mms:" />
-        <favorite launcher:uri="mmsto:" />
-    </resolve>
 
-    <resolve
-        launcher:container="-101"
-        launcher:screen="1"
-        launcher:x="1"
-        launcher:y="0" >
-        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_EMAIL;end" />
-        <favorite launcher:uri="mailto:" />
-    </resolve>
+        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_MARKET;end" />
+        <favorite launcher:uri="market://details?id=com.android.launcher" />
 
+    </resolve>
     <resolve
         launcher:container="-101"
         launcher:screen="2"
@@ -50,29 +39,14 @@
 
     <!-- All Apps -->
 
-    <favorite
+    <resolve
         launcher:container="-101"
         launcher:screen="4"
         launcher:x="4"
-        launcher:y="0"
-        launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_MUSIC;end" />
-
-    <resolve
-        launcher:container="-101"
-        launcher:screen="5"
-        launcher:x="5"
         launcher:y="0" >
-        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_GALLERY;end" />
-        <favorite launcher:uri="#Intent;type=images/*;end" />
-    </resolve>
-
-    <resolve
-        launcher:container="-101"
-        launcher:screen="6"
-        launcher:x="6"
-        launcher:y="0" >
-        <favorite launcher:uri="#Intent;action=android.media.action.STILL_IMAGE_CAMERA;end" />
-        <favorite launcher:uri="#Intent;action=android.intent.action.CAMERA_BUTTON;end" />
+         <favorite
+             launcher:packageName="com.droidlogic.videoplayer"
+             launcher:className="com.droidlogic.videoplayer.FileList" />
     </resolve>
 
 </favorites>
