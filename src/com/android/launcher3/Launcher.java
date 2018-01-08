@@ -356,12 +356,12 @@ public class Launcher extends Activity
     private boolean mRotationEnabled = false;
 
     @Thunk void setOrientation() {
-        if (mRotationEnabled) {
+        /*if (mRotationEnabled) {
             unlockScreenOrientation(true);
         } else {
             setRequestedOrientation(
                     ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-        }
+        }*/
     }
 
     private RotationPrefChangeHandler mRotationPrefChangeHandler;
@@ -468,8 +468,7 @@ public class Launcher extends Activity
 
         // On large interfaces, or on devices that a user has specifically enabled screen rotation,
         // we want the screen to auto-rotate based on the current orientation
-        setOrientation();
-
+        //setOrientation();
         if (mLauncherCallbacks != null) {
             mLauncherCallbacks.onCreate(savedInstanceState);
         }
