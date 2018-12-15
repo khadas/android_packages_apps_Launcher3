@@ -19,23 +19,12 @@
     <!-- Messaging, Email, Browser, [All Apps], Music, Gallery, Camera -->
     <resolve
         launcher:container="-101"
-        launcher:screen="0"
-        launcher:x="0"
-        launcher:y="0" >
-        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_MESSAGING;end" />
-        <favorite launcher:uri="sms:" />
-        <favorite launcher:uri="smsto:" />
-        <favorite launcher:uri="mms:" />
-        <favorite launcher:uri="mmsto:" />
-    </resolve>
-
-    <resolve
-        launcher:container="-101"
         launcher:screen="1"
         launcher:x="1"
         launcher:y="0" >
-        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_EMAIL;end" />
-        <favorite launcher:uri="mailto:" />
+		<favorite
+			launcher:packageName="com.android.rk"
+			launcher:className="com.android.rk.RockExplorer" />
     </resolve>
 
     <resolve
@@ -44,35 +33,29 @@
         launcher:x="2"
         launcher:y="0" >
         <favorite
-            launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_BROWSER;end" />
-        <favorite launcher:uri="http://www.example.com/" />
+		    launcher:packageName="com.android.settings"
+			launcher:className="com.android.settings.Settings" />
     </resolve>
 
     <!-- All Apps -->
 
-    <favorite
+    <resolve
         launcher:container="-101"
         launcher:screen="4"
         launcher:x="4"
-        launcher:y="0"
-        launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_MUSIC;end" />
+        launcher:y="0" >
+        <favorite
+			launcher:packageName="com.android.music"
+			launcher:className="com.android.music.MusicBrowserActivity" />
+    </resolve>
 
     <resolve
         launcher:container="-101"
         launcher:screen="5"
         launcher:x="5"
         launcher:y="0" >
-        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_GALLERY;end" />
-        <favorite launcher:uri="#Intent;type=images/*;end" />
+        <favorite
+			launcher:packageName="android.rk.RockVideoPlayer"
+			launcher:className="android.rk.RockVideoPlayer.RockVideoPlayer" />
     </resolve>
-
-    <resolve
-        launcher:container="-101"
-        launcher:screen="6"
-        launcher:x="6"
-        launcher:y="0" >
-        <favorite launcher:uri="#Intent;action=android.media.action.STILL_IMAGE_CAMERA;end" />
-        <favorite launcher:uri="#Intent;action=android.intent.action.CAMERA_BUTTON;end" />
-    </resolve>
-
 </favorites>
