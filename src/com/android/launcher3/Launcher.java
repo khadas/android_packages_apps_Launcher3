@@ -1600,7 +1600,9 @@ public class Launcher extends Activity
             } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
                 mUserPresent = true;
                 updateAutoAdvanceState();
-            }
+            } else if ("action.launcher.application.menu".equals(action)) {
+                showAppsView(true , true , false);
+	        }
         }
     };
 
@@ -1612,6 +1614,7 @@ public class Launcher extends Activity
         final IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_USER_PRESENT);
+        filter.addAction("action.launcher.application.menu");
         registerReceiver(mReceiver, filter);
         FirstFrameAnimatorHelper.initializeDrawListener(getWindow().getDecorView());
         mAttached = true;
@@ -3217,6 +3220,7 @@ public class Launcher extends Activity
 
         // Change the state *after* we've called all the transition code
         mState = State.WORKSPACE;
+        Utilities.setSystemProperty("sys.launcher.state","1");
 
         // Resume the auto-advance of widgets
         mUserPresent = true;
@@ -3258,6 +3262,7 @@ public class Launcher extends Activity
         mStateTransitionAnimation.startAnimationToWorkspace(mState, mWorkspace.getState(),
                 Workspace.State.OVERVIEW, animated, postAnimRunnable);
         mState = State.WORKSPACE;
+        Utilities.setSystemProperty("sys.launcher.state","1");
         // If animated from long press, then don't allow any of the controller in the drag
         // layer to intercept any remaining touch.
         mWorkspace.requestDisallowInterceptTouchEvent(animated);
@@ -3326,7 +3331,10 @@ public class Launcher extends Activity
 
         // Change the state *after* we've called all the transition code
         mState = toState;
-
+        if (mState == State.WORKSPACE)
+            Utilities.setSystemProperty("sys.launcher.state","1");
+        else
+            Utilities.setSystemProperty("sys.launcher.state","0");
         // Pause the auto-advance of widgets until we are out of AllApps
         mUserPresent = false;
         updateAutoAdvanceState();
@@ -3363,12 +3371,16 @@ public class Launcher extends Activity
 
         if (isAppsViewVisible()) {
             mState = State.APPS_SPRING_LOADED;
+            Utilities.setSystemProperty("sys.launcher.state","0");
         } else if (isWidgetsViewVisible()) {
             mState = State.WIDGETS_SPRING_LOADED;
+            Utilities.setSystemProperty("sys.launcher.state","0");
         } else if (!FeatureFlags.LAUNCHER3_LEGACY_WORKSPACE_DND) {
             mState = State.WORKSPACE_SPRING_LOADED;
+            Utilities.setSystemProperty("sys.launcher.state","0");
         } else {
             mState = State.WORKSPACE;
+            Utilities.setSystemProperty("sys.launcher.state","1");
         }
     }
 
