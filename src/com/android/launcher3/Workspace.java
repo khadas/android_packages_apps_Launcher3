@@ -286,7 +286,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
         mInsets.set(insets);
 
         DeviceProfile grid = mLauncher.getDeviceProfile();
-        mMaxDistanceForFolderCreation = (0.55f * grid.iconSizePx);
+        mMaxDistanceForFolderCreation = (0.8f * grid.iconSizePx);
         mWorkspaceFadeInAdjacentScreens = grid.shouldFadeAdjacentWorkspaceScreens();
 
         Rect padding = grid.workspacePadding;
