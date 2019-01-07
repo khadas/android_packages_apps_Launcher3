@@ -31,6 +31,7 @@ import android.view.MotionEvent;
 import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.states.InternalStateHandler;
 
@@ -124,8 +125,13 @@ public class DiscoveryBounce extends AbstractFloatingView {
     }
 
     private static void showForHomeIfNeeded(Launcher launcher, boolean withDelay) {
-        if (!launcher.isInState(NORMAL)
-                || launcher.getSharedPrefs().getBoolean(HOME_BOUNCE_SEEN, false)
+        if (!launcher.isInState(NORMAL)) {
+            return;
+        }
+        String platformName = Utilities.getSystemProperty("ro.board.platform", "");
+        boolean defaultValue = "rk3126c".equals(platformName)
+                || "rk3326".equals(platformName);
+        if (launcher.getSharedPrefs().getBoolean(HOME_BOUNCE_SEEN, defaultValue)
                 || AbstractFloatingView.getTopOpenView(launcher) != null
                 || UserManagerCompat.getInstance(launcher).isDemoUser()
                 || ActivityManager.isRunningInTestHarness()) {
