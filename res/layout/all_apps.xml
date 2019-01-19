@@ -75,6 +75,7 @@
                 android:imeOptions="actionSearch|flagNoExtractUi"
                 android:inputType="text|textNoSuggestions|textCapWords"
                 android:maxLines="1"
+                android:visibility="gone"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textColor="#4c4c4c"
