@@ -47,6 +47,7 @@ public class ConfigMonitor extends BroadcastReceiver implements DisplayListener 
     private final int mDisplayId;
     private final Point mRealSize;
     private final Point mSmallestSize, mLargestSize;
+    private boolean mAlreadyKill;
 
     public ConfigMonitor(Context context) {
         mContext = context;
@@ -64,6 +65,9 @@ public class ConfigMonitor extends BroadcastReceiver implements DisplayListener 
         mSmallestSize = new Point();
         mLargestSize = new Point();
         display.getCurrentSizeRange(mSmallestSize, mLargestSize);
+
+        Log.d(TAG, "ConfigMonitor init");
+        mAlreadyKill = false;
     }
 
     @Override
@@ -111,6 +115,11 @@ public class ConfigMonitor extends BroadcastReceiver implements DisplayListener 
 
     private void killProcess() {
         Log.d(TAG, "restarting launcher");
+        if (mAlreadyKill) {
+            Log.d(TAG, "already kill launcher process");
+            return;
+        }
+        mAlreadyKill = true;
         mContext.unregisterReceiver(this);
         mContext.getSystemService(DisplayManager.class).unregisterDisplayListener(this);
         android.os.Process.killProcess(android.os.Process.myPid());
