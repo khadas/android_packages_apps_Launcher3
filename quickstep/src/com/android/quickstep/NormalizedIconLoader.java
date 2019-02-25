@@ -70,7 +70,7 @@ public class NormalizedIconLoader extends IconLoader {
                 false));
     }
 
-    private synchronized BitmapInfo getBitmapInfo(Drawable drawable, int userId,
+    private BitmapInfo getBitmapInfo(Drawable drawable, int userId,
             int primaryColor, boolean isInstantApp) {
         if (mLauncherIcons == null) {
             mLauncherIcons = LauncherIcons.obtain(mContext);
