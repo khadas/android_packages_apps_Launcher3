@@ -22,7 +22,7 @@ import com.android.launcher3.util.Thunk;
 
 public class CheckLongPressHelper {
 
-    public static final int DEFAULT_LONG_PRESS_TIMEOUT = 500;
+    public static final int DEFAULT_LONG_PRESS_TIMEOUT = 800;
 
     @Thunk View mView;
     @Thunk View.OnLongClickListener mListener;
