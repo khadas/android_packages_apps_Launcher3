@@ -28,6 +28,7 @@ import static com.android.launcher3.anim.Interpolators.DEACCEL_1_7;
 import static com.android.launcher3.anim.Interpolators.OVERSHOOT_1_2;
 import static com.android.launcher3.anim.Interpolators.clampToProgress;
 import static com.android.launcher3.anim.PropertySetter.NO_ANIM_PROPERTY_SETTER;
+import static com.android.launcher3.LauncherState.ALL_APPS;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -366,6 +367,16 @@ public class LauncherStateManager {
             }
 
             @Override
+            public void onAnimationCancel(Animator animation) {
+                super.onAnimationCancel(animation);
+                mState = mCurrentStableState;
+                if (mState == ALL_APPS)
+                   Utilities.setSystemProperty("sys.launcher.state","0");
+                else
+                   Utilities.setSystemProperty("sys.launcher.state","1");
+            }
+
+            @Override
             public void onAnimationSuccess(Animator animator) {
                 // Run any queued runnables
                 if (onCompleteRunnable != null) {
@@ -386,6 +397,10 @@ public class LauncherStateManager {
             mState.onStateDisabled(mLauncher);
         }
         mState = state;
+        if (mState == ALL_APPS)
+              Utilities.setSystemProperty("sys.launcher.state","0");
+        else
+              Utilities.setSystemProperty("sys.launcher.state","1");
         mState.onStateEnabled(mLauncher);
         mLauncher.getAppWidgetHost().setResumed(state == LauncherState.NORMAL);
 
