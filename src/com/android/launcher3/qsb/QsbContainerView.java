@@ -256,7 +256,7 @@ public class QsbContainerView extends FrameLayout {
             SearchManager searchManager =
                     (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
             ComponentName searchComponent = searchManager.getGlobalSearchActivity();
-            if (searchComponent == null) return null;
+            if (searchComponent == null || FeatureFlags.GO_DISABLE_WIDGETS) return null;
             String providerPkg = searchComponent.getPackageName();
 
             AppWidgetProviderInfo defaultWidgetForSearchPackage = null;
