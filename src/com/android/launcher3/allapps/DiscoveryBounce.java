@@ -144,8 +144,13 @@ public class DiscoveryBounce extends AbstractFloatingView {
     }
 
     private static void showForHomeIfNeeded(Launcher launcher, boolean withDelay) {
-        if (!launcher.isInState(NORMAL)
-                || (launcher.getSharedPrefs().getBoolean(HOME_BOUNCE_SEEN, false)
+        if (!launcher.isInState(NORMAL)) {
+            return;
+        }
+        String platformName = Utilities.getSystemProperty("ro.board.platform", "");
+        boolean defaultValue = "rk3126c".equals(platformName)
+            || "rk3326".equals(platformName);
+        if ((launcher.getSharedPrefs().getBoolean(HOME_BOUNCE_SEEN, defaultValue)
                 && !shouldShowForWorkProfile(launcher))
                 || AbstractFloatingView.getTopOpenView(launcher) != null
                 || UserManagerCompat.getInstance(launcher).isDemoUser()
