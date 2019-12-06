@@ -121,7 +121,8 @@ LOCAL_STATIC_ANDROID_LIBRARIES := Launcher3CommonDepsLib
 LOCAL_SRC_FILES := \
     $(call all-java-files-under, src) \
     $(call all-java-files-under, src_ui_overrides) \
-    $(call all-java-files-under, go/src)
+    $(call all-java-files-under, go/src) \
+    $(call all-java-files-under, src_shortcuts_overrides)
 
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/go/res
 
@@ -238,7 +239,8 @@ LOCAL_SRC_FILES := \
     $(call all-java-files-under, src) \
     $(call all-java-files-under, quickstep/src) \
     $(call all-java-files-under, quickstep/recents_ui_overrides/src) \
-    $(call all-java-files-under, go/src)
+    $(call all-java-files-under, go/src) \
+    $(call all-java-files-under, src_shortcuts_overrides)
 
 LOCAL_RESOURCE_DIR := \
     $(LOCAL_PATH)/quickstep/res \
@@ -285,7 +287,8 @@ LOCAL_SRC_FILES := \
     $(call all-java-files-under, src) \
     $(call all-java-files-under, quickstep/src) \
     $(call all-java-files-under, go/src) \
-    $(call all-java-files-under, go/quickstep/src)
+    $(call all-java-files-under, go/quickstep/src) \
+    $(call all-java-files-under, src_shortcuts_overrides)
 
 LOCAL_RESOURCE_DIR := \
     $(LOCAL_PATH)/quickstep/res \
