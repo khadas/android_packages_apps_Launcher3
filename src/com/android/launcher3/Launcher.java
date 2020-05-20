@@ -382,7 +382,10 @@ public class Launcher extends BaseDraggingActivity implements LauncherExterns,
         getRootView().dispatchInsets();
 
         // Listen for broadcasts
-        registerReceiver(mScreenOffReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+        final IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction("action.launcher.application.menu");
+        registerReceiver(mScreenOffReceiver, filter);
 
         getSystemUiController().updateUiState(SystemUiController.UI_STATE_BASE_WINDOW,
                 Themes.getAttrBoolean(this, R.attr.isWorkspaceDarkText));
@@ -1294,6 +1297,11 @@ public class Launcher extends BaseDraggingActivity implements LauncherExterns,
         public void onReceive(Context context, Intent intent) {
             // Reset AllApps to its initial state only if we are not in the middle of
             // processing a multi-step drop
+            final String action = intent.getAction();
+            if ("action.launcher.application.menu".equals(action)) {
+                getStateManager().goToState(ALL_APPS);
+                return;
+            }
             if (mPendingRequestArgs == null) {
                 mStateManager.goToState(NORMAL);
             }

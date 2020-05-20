@@ -18,6 +18,7 @@ package com.android.launcher3;
 
 import static com.android.launcher3.LauncherState.NORMAL;
 import static com.android.launcher3.anim.PropertySetter.NO_ANIM_PROPERTY_SETTER;
+import static com.android.launcher3.LauncherState.ALL_APPS;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -386,7 +387,17 @@ public class LauncherStateManager {
                 // Change the internal state only when the transition actually starts
                 onStateTransitionStart(state);
             }
-
+			
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                super.onAnimationCancel(animation);
+                mState = mCurrentStableState;
+                if (mState == ALL_APPS)
+                   Utilities.setSystemProperty("sys.launcher.state","0");
+                else
+                   Utilities.setSystemProperty("sys.launcher.state","1");
+            }
+			
             @Override
             public void onAnimationSuccess(Animator animator) {
                 // Run any queued runnables
@@ -405,6 +416,12 @@ public class LauncherStateManager {
             mState.onStateDisabled(mLauncher);
         }
         mState = state;
+		
+        if (mState == ALL_APPS)
+              Utilities.setSystemProperty("sys.launcher.state","0");
+        else
+              Utilities.setSystemProperty("sys.launcher.state","1");
+			  		
         mState.onStateEnabled(mLauncher);
         mLauncher.onStateSetStart(mState);
 
