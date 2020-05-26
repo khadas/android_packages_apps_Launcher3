@@ -29,7 +29,7 @@ import com.android.launcher3.util.TouchUtil;
  */
 public class CheckLongPressHelper {
 
-    public static final float DEFAULT_LONG_PRESS_TIMEOUT_FACTOR = 0.75f;
+    public static final float DEFAULT_LONG_PRESS_TIMEOUT_FACTOR = 1.0f;
 
     private final View mView;
     private final View.OnLongClickListener mListener;
