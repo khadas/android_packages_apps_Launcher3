@@ -935,7 +935,7 @@ public class Launcher extends BaseDraggingActivity implements LauncherExterns,
             // Set the notification listener and fetch updated notifications when we resume
             NotificationListener.setNotificationsChangedListener(mPopupDataProvider);
 
-            DiscoveryBounce.showForHomeIfNeeded(this);
+            //DiscoveryBounce.showForHomeIfNeeded(this);
 
             if (mPendingActivityRequestCode != -1 && isInState(NORMAL)) {
                 UiFactory.resetPendingActivityResults(this, mPendingActivityRequestCode);
