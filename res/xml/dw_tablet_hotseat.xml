@@ -45,8 +45,8 @@
         launcher:x="3"
         launcher:y="0" >
         <favorite
-			launcher:packageName="com.android.music"
-			launcher:className="com.android.music.MusicBrowserActivity" />
+			launcher:packageName="com.android.vending"
+			launcher:className="com.android.vending.AssetBrowserActivity" />
     </resolve>
 
     <resolve
@@ -65,8 +65,8 @@
         launcher:x="5"
         launcher:y="0" >
         <favorite
-			launcher:packageName="com.android.vending"
-			launcher:className="com.android.vending.AssetBrowserActivity" />
+			launcher:packageName="com.android.music"
+			launcher:className="com.android.music.MusicBrowserActivity" />
     </resolve>
     
 </favorites>
