@@ -50,7 +50,7 @@ import java.util.Set;
 public class WidgetsModel {
 
     // True is the widget support is disabled.
-    public static final boolean GO_DISABLE_WIDGETS = false;
+    public static final boolean GO_DISABLE_WIDGETS = true;
 
     private static final String TAG = "WidgetsModel";
     private static final boolean DEBUG = false;
