@@ -23,6 +23,8 @@ import static com.android.launcher3.states.StateAnimationConfig.SKIP_DEPTH_CONTR
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.IBinder;
 import android.os.SystemProperties;
 import android.util.FloatProperty;
@@ -139,6 +141,9 @@ public class DepthController implements StateHandler<LauncherState>,
 
     private View.OnAttachStateChangeListener mOnAttachListener;
 
+    private ActivityManager mActivityManager = null;
+    private boolean isLowRamDevice = false;
+
     public DepthController(Launcher l) {
         mLauncher = l;
     }
@@ -155,7 +160,7 @@ public class DepthController implements StateHandler<LauncherState>,
                 public void onViewAttachedToWindow(View view) {
                     // To handle the case where window token is invalid during last setDepth call.
                     IBinder windowToken = mLauncher.getRootView().getWindowToken();
-                    if (windowToken != null) {
+                    if (windowToken != null && !isLowRamDevice) {
                         mWallpaperManager.setWallpaperZoomOut(windowToken, mDepth);
                     }
                     onAttached();
@@ -265,6 +270,15 @@ public class DepthController implements StateHandler<LauncherState>,
     }
 
     private boolean dispatchTransactionSurface(float depth) {
+        //@kenjc.bian: disable zoom out for low ram device.
+        if (mLauncher != null && mActivityManager == null) {
+            mActivityManager = (ActivityManager) mLauncher.getSystemService(Context.ACTIVITY_SERVICE);
+            isLowRamDevice = mActivityManager.isLowRamDevice();
+        }
+        if (isLowRamDevice) {
+            return false;
+        }
+
         boolean supportsBlur = BlurUtils.supportsBlursOnWindows();
         if (supportsBlur && (mSurface == null || !mSurface.isValid())) {
             return false;
