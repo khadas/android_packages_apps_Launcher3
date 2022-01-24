@@ -934,6 +934,8 @@ public class Launcher extends StatefulActivity<LauncherState> implements Launche
 
         mAppWidgetHost.setActivityStarted(true);
         TraceHelper.INSTANCE.endSection(traceToken);
+
+        mAppsView.reset(isStarted() /* animate */);
     }
 
     @Override
