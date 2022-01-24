@@ -132,6 +132,12 @@ public class AllAppsList {
      * If the app is already in the list, doesn't add it.
      */
     public void add(AppInfo info, LauncherActivityInfo activityInfo) {
+        //remove app icon
+        if (info.componentName.getPackageName().equals("com.droidlogic.updater")
+			|| info.componentName.getPackageName().equals("com.droidlogic.android.tv")){
+			return;
+        }
+        //add end
         if (!mAppFilter.shouldShowApp(info.componentName)) {
             return;
         }
