@@ -476,13 +476,27 @@ public class LauncherPreviewRenderer extends ContextWrapper
 
         // Add first page QSB
         if (FeatureFlags.QSB_ON_FIRST_SCREEN) {
+            // @Rockchip add two qsb
+            boolean twoQsb = mContext.getResources().getBoolean(R.bool.config_two_qsb);
+            // @end
             CellLayout firstScreen = mWorkspaceScreens.get(FIRST_SCREEN_ID);
             View qsb = mHomeElementInflater.inflate(R.layout.qsb_preview, firstScreen,
                     false);
             CellLayout.LayoutParams lp =
-                    new CellLayout.LayoutParams(0, 0, firstScreen.getCountX(), 1);
+                    new CellLayout.LayoutParams(0, twoQsb?1:0, firstScreen.getCountX(), 1);
             lp.canReorder = false;
             firstScreen.addViewToCellLayout(qsb, 0, R.id.search_container_workspace, lp, true);
+
+            // @Rockchip add two qsb
+            if (twoQsb) {
+                View qsb2 = mHomeElementInflater.inflate(R.layout.qsb2_preview,
+                    firstScreen, false);
+                CellLayout.LayoutParams lp2 =
+                        new CellLayout.LayoutParams(0, 0, firstScreen.getCountX(), 1);
+                lp2.canReorder = false;
+                firstScreen.addViewToCellLayout(qsb2, 1, R.id.search_container_workspace2, lp2, true);
+            }
+            // @end
         }
 
         measureView(mRootView, mDp.widthPx, mDp.heightPx);

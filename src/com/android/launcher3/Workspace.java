@@ -223,6 +223,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
     private float mXDown;
     private float mYDown;
     private View mQsb;
+    private View mQsb2;
     private boolean mIsEventOverQsb;
 
     final static float START_DAMPING_TOUCH_SLOP_ANGLE = (float) Math.PI / 6;
@@ -573,6 +574,10 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
             return;
         }
 
+        // @Rockchip add two qsb
+        boolean twoQsb = getContext().getResources().getBoolean(R.bool.config_two_qsb);
+        // @end
+
         // Add the first page
         CellLayout firstPage = insertNewWorkspaceScreen(Workspace.FIRST_SCREEN_ID, getChildCount());
         // Always add a QSB on the first screen.
@@ -585,13 +590,28 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
 
         int cellVSpan = FeatureFlags.EXPANDED_SMARTSPACE.get()
                 ? EXPANDED_SMARTSPACE_HEIGHT : DEFAULT_SMARTSPACE_HEIGHT;
-        CellLayout.LayoutParams lp = new CellLayout.LayoutParams(0, 0, firstPage.getCountX(),
+        CellLayout.LayoutParams lp = new CellLayout.LayoutParams(0, twoQsb?1:0, firstPage.getCountX(),
                 cellVSpan);
         lp.canReorder = false;
         if (!firstPage.addViewToCellLayout(mQsb, 0, R.id.search_container_workspace, lp, true)) {
             Log.e(TAG, "Failed to add to item at (0, 0) to CellLayout");
             mQsb = null;
         }
+
+        // @Rockchip add two qsb
+        if (twoQsb) {
+            if (mQsb2 == null) {
+                mQsb2 = LayoutInflater.from(getContext())
+                        .inflate(R.layout.search_container_workspace2, firstPage, false);
+            }
+            CellLayout.LayoutParams lp2 = new CellLayout.LayoutParams(0, 0, firstPage.getCountX(), 1);
+            lp2.canReorder = false;
+            if (!firstPage.addViewToCellLayout(mQsb2, 1, R.id.search_container_workspace2, lp2, true)) {
+                Log.e(TAG, "Failed to add qsb2 to item at to CellLayout");
+                mQsb2 = null;
+            }
+        }
+        // @end
     }
 
     public void removeAllWorkspaceScreens() {
@@ -602,6 +622,10 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
         // Recycle the QSB widget
         if (mQsb != null) {
             ((ViewGroup) mQsb.getParent()).removeView(mQsb);
+        }
+
+        if (mQsb2 != null) {
+            ((ViewGroup) mQsb2.getParent()).removeView(mQsb2);
         }
 
         // Remove the pages and clear the screen models
