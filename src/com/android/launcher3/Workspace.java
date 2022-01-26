@@ -548,10 +548,11 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
      * Initializes and binds the first page
      * @param qsb an existing qsb to recycle or null.
      */
-    public void bindAndInitFirstWorkspaceScreen(View qsb) {
+    public void bindAndInitFirstWorkspaceScreen(View qsb, View qsb2) {
         if (!FeatureFlags.QSB_ON_FIRST_SCREEN) {
             return;
         }
+        boolean twoQsb = getContext().getResources().getBoolean(R.bool.config_two_qsb);
         // Add the first page
         CellLayout firstPage = insertNewWorkspaceScreen(Workspace.FIRST_SCREEN_ID, 0);
         // Always add a QSB on the first screen.
@@ -564,11 +565,28 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
 
         int cellVSpan = FeatureFlags.EXPANDED_SMARTSPACE.get()
                 ? EXPANDED_SMARTSPACE_HEIGHT : DEFAULT_SMARTSPACE_HEIGHT;
-        CellLayout.LayoutParams lp = new CellLayout.LayoutParams(0, 0, firstPage.getCountX(),
+        CellLayout.LayoutParams lp = new CellLayout.LayoutParams(0, twoQsb?1:0, firstPage.getCountX(),
                 cellVSpan);
         lp.canReorder = false;
         if (!firstPage.addViewToCellLayout(qsb, 0, R.id.search_container_workspace, lp, true)) {
             Log.e(TAG, "Failed to add to item at (0, 0) to CellLayout");
+        }
+
+        if (!twoQsb) {
+            return;
+        }
+        //qsb2
+        if (qsb2 == null) {
+            // In transposed layout, we add the QSB in the Grid. As workspace does not touch the
+            // edges, we do not need a full width QSB.
+            qsb2 = LayoutInflater.from(getContext())
+                    .inflate(R.layout.search_container_workspace2, firstPage, false);
+        }
+
+        CellLayout.LayoutParams lp2 = new CellLayout.LayoutParams(0, 0, firstPage.getCountX(), 1);
+        lp2.canReorder = false;
+        if (!firstPage.addViewToCellLayout(qsb2, 1, R.id.search_container_workspace2, lp2, true)) {
+            Log.e(TAG, "Failed to add qsb2 to item at to CellLayout");
         }
     }
 
@@ -583,6 +601,11 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
             ((ViewGroup) qsb.getParent()).removeView(qsb);
         }
 
+        View qsb2 = findViewById(R.id.search_container_workspace2);
+        if (qsb2 != null) {
+            ((ViewGroup) qsb2.getParent()).removeView(qsb2);
+        }
+
         // Remove the pages and clear the screen models
         removeFolderListeners();
         removeAllViews();
@@ -593,7 +616,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
         mLauncher.mHandler.removeCallbacksAndMessages(DeferredWidgetRefresh.class);
 
         // Ensure that the first page is always present
-        bindAndInitFirstWorkspaceScreen(qsb);
+        bindAndInitFirstWorkspaceScreen(qsb, qsb2);
 
         // Re-enable the layout transitions
         enableLayoutTransitions();
