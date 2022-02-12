@@ -348,7 +348,11 @@ public class AutoInstallsLayout {
         @Override
         public int parseAndAdd(XmlPullParser parser) {
             final String packageName = getAttributeValue(parser, ATTR_PACKAGE_NAME);
-            final String className = getAttributeValue(parser, ATTR_CLASS_NAME);
+            String className = getAttributeValue(parser, ATTR_CLASS_NAME);
+            if ("com.android.camera.CameraActivity".equals(className)
+                    && "com.android.camera2".equals(packageName)) {
+                className = "com.android.camera.CameraLauncher";
+            }
 
             if (!TextUtils.isEmpty(packageName) && !TextUtils.isEmpty(className)) {
                 ActivityInfo info;
