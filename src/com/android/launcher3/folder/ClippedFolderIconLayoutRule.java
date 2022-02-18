@@ -4,6 +4,7 @@ public class ClippedFolderIconLayoutRule {
 
     public static final int MAX_NUM_ITEMS_IN_PREVIEW = 4;
     private static final int MIN_NUM_ITEMS_IN_PREVIEW = 2;
+    private static final boolean SQUARE_IN_PREVIEW = MAX_NUM_ITEMS_IN_PREVIEW == 4;
 
     private static final float MIN_SCALE = 0.44f;
     private static final float MAX_SCALE = 0.51f;
@@ -85,6 +86,9 @@ public class ClippedFolderIconLayoutRule {
     }
 
     private void getPosition(int index, int curNumItems, float[] result) {
+        if (curNumItems == 3 && SQUARE_IN_PREVIEW) {
+            curNumItems = 4;
+        }
         // The case of two items is homomorphic to the case of one.
         curNumItems = Math.max(curNumItems, 2);
 
@@ -130,7 +134,7 @@ public class ClippedFolderIconLayoutRule {
     public float scaleForItem(int numItems) {
         // Scale is determined by the number of items in the preview.
         final float scale;
-        if (numItems <= 3) {
+        if (numItems <= (SQUARE_IN_PREVIEW ? 2 : 3)) {
             scale = MAX_SCALE;
         } else {
             scale = MIN_SCALE;
