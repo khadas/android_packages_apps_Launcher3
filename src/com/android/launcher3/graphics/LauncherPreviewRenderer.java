@@ -492,22 +492,12 @@ public class LauncherPreviewRenderer extends ContextWrapper
 
         // Add first page QSB
         if (FeatureFlags.QSB_ON_FIRST_SCREEN) {
-            boolean two_qsb = mContext.getResources().getBoolean(R.bool.config_two_qsb);
             View qsb = mHomeElementInflater.inflate(
                     R.layout.search_container_workspace, mWorkspace, false);
             CellLayout.LayoutParams lp =
-                    new CellLayout.LayoutParams(0, two_qsb?1:0, mWorkspace.getCountX(), 1);
+                    new CellLayout.LayoutParams(0, 0, mWorkspace.getCountX(), 1);
             lp.canReorder = false;
             mWorkspace.addViewToCellLayout(qsb, 0, R.id.search_container_workspace, lp, true);
-
-            if (two_qsb) {
-                View qsb2 = mHomeElementInflater.inflate(
-                        R.layout.search_container_workspace2, mWorkspace, false);
-                CellLayout.LayoutParams lp2 =
-                        new CellLayout.LayoutParams(0, 0, mWorkspace.getCountX(), 1);
-                lp2.canReorder = false;
-                mWorkspace.addViewToCellLayout(qsb2, 1, R.id.search_container_workspace2, lp2, true);
-            }
         }
 
         measureView(mRootView, mDp.widthPx, mDp.heightPx);

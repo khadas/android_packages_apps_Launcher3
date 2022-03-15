@@ -108,11 +108,8 @@
 
     <!-- QSB IDs. DO not change -->
     <item type="id" name="search_container_workspace" />
-    <item type="id" name="search_container_workspace2" />
     <item type="id" name="search_container_all_apps" />
     <item type="id" name="search_container_hotseat" />
-
-    <bool name="config_two_qsb">false</bool>
 
     <!-- Recents -->
     <item type="id" name="overview_panel"/>
