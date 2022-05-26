@@ -928,7 +928,7 @@ public class Launcher extends StatefulActivity<LauncherState> implements Launche
         // Set the notification listener and fetch updated notifications when we resume
         NotificationListener.setNotificationsChangedListener(mPopupDataProvider);
 
-        DiscoveryBounce.showForHomeIfNeeded(this);
+        //DiscoveryBounce.showForHomeIfNeeded(this);
     }
 
     protected void handlePendingActivityRequest() { }
