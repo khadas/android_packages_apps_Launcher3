@@ -2706,6 +2706,12 @@ public class Launcher extends StatefulActivity<LauncherState> implements Launche
             }
             return true;
         }
+
+        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+			if (mDragController.isDragging()) {
+				mDragController.cancelDrag();
+			}
+        }
         return super.onKeyUp(keyCode, event);
     }
 
