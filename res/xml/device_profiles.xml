@@ -125,4 +125,40 @@
 
     </grid-option>
 
+    <grid-option
+        launcher:name="5_by_6"
+        launcher:numRows="5"
+        launcher:numColumns="6"
+        launcher:numFolderRows="4"
+        launcher:numFolderColumns="5"
+        launcher:numHotseatIcons="7"
+        launcher:dbFile="launcher_5_by_6.db"
+        launcher:defaultLayoutId="@xml/default_workspace_5x6" >
+
+
+        <display-option
+            launcher:name="Nexus 7"
+            launcher:minWidthDps="575"
+            launcher:minHeightDps="904"
+            launcher:iconImageSize="64"
+            launcher:iconTextSize="14.4"
+            launcher:canBeDefault="true" />
+
+        <display-option
+            launcher:name="Nexus 10"
+            launcher:minWidthDps="727"
+            launcher:minHeightDps="1207"
+            launcher:iconImageSize="76"
+            launcher:iconTextSize="14.4"
+            launcher:canBeDefault="true" />
+
+        <display-option
+            launcher:name="20-inch Tablet"
+            launcher:minWidthDps="1527"
+            launcher:minHeightDps="2527"
+            launcher:iconImageSize="100"
+            launcher:iconTextSize="20.0"
+            launcher:canBeDefault="true" />
+
+    </grid-option>
 </profiles>
