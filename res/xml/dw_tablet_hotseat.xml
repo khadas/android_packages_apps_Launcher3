@@ -25,6 +25,7 @@
         <favorite launcher:className="com.droidlogic.videoplayer.FileList"
                   launcher:packageName="com.droidlogic.videoplayer" />
     </resolve>
+
     <resolve
         launcher:container="-101"
         launcher:screen="2"
@@ -39,10 +40,9 @@
         launcher:screen="3"
         launcher:x="3"
         launcher:y="0" >
-        <favorite launcher:className="com.android.vending.AssetBrowserActivity"
-                  launcher:packageName="com.android.vending" />
+        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_MARKET;end" />
+        <favorite launcher:uri="market://details?id=com.android.launcher" />
     </resolve>
-    <!-- All Apps -->
 
     <resolve
         launcher:container="-101"
