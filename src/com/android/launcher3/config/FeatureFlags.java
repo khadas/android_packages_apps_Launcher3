@@ -183,6 +183,9 @@ public final class FeatureFlags {
             "ENABLE_MINIMAL_DEVICE", false,
             "Allow user to toggle minimal device mode in launcher.");
 
+    public static final BooleanFlag ENABLE_TASKBAR = getDebugFlag(
+            "ENABLE_TASKBAR", false, "Allows a system Taskbar to be shown on larger devices.");
+
     public static final BooleanFlag ENABLE_TASKBAR_POPUP_MENU = getDebugFlag(
             270392477, "ENABLE_TASKBAR_POPUP_MENU", true,
             "Enables long pressing taskbar icons to show the popup menu.");
