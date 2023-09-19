@@ -77,9 +77,11 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -537,6 +539,9 @@ public class Launcher extends StatefulActivity<LauncherState>
 
         // Listen for screen turning off
         ScreenOnTracker.INSTANCE.get(this).addListener(mScreenOnListener);
+        final IntentFilter filter = new IntentFilter();
+        filter.addAction("action.launcher.application.menu");
+        registerReceiver(mApplicationReceiver, filter);
         getSystemUiController().updateUiState(SystemUiController.UI_STATE_BASE_WINDOW,
                 Themes.getAttrBoolean(this, R.attr.isWorkspaceDarkText));
 
@@ -1549,6 +1554,18 @@ public class Launcher extends StatefulActivity<LauncherState>
     }
 
     private final ScreenOnListener mScreenOnListener = this::onScreenOnChanged;
+    private final BroadcastReceiver mApplicationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Reset AllApps to its initial state only if we are not in the middle of
+            // processing a multi-step drop
+            final String action = intent.getAction();
+            if ("action.launcher.application.menu".equals(action)) {
+                getStateManager().goToState(ALL_APPS);
+                return;
+            }
+        }
+    };
 
     private void updateNotificationDots(Predicate<PackageUserKey> updatedDots) {
         mWorkspace.updateNotificationDots(updatedDots);
@@ -1772,6 +1789,7 @@ public class Launcher extends StatefulActivity<LauncherState>
         super.onDestroy();
         ACTIVITY_TRACKER.onActivityDestroyed(this);
 
+        unregisterReceiver(mApplicationReceiver);
         ScreenOnTracker.INSTANCE.get(this).removeListener(mScreenOnListener);
         mWorkspace.removeFolderListeners();
         PluginManagerWrapper.INSTANCE.get(this).removePluginListener(this);

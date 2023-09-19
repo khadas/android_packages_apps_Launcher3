@@ -36,6 +36,9 @@ import com.android.launcher3.anim.PendingAnimation;
 import com.android.launcher3.states.StateAnimationConfig;
 import com.android.launcher3.states.StateAnimationConfig.AnimationFlags;
 
+import static com.android.launcher3.LauncherState.ALL_APPS;
+import android.os.SystemProperties;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -384,6 +387,12 @@ public class StateManager<STATE_TYPE extends BaseState<STATE_TYPE>> {
             mLastStableState = state.getHistoryForState(mCurrentStableState);
             mCurrentStableState = state;
         }
+
+		if(mState == ALL_APPS){
+			SystemProperties.set("sys.launcher.state","0");
+		}else{
+			SystemProperties.set("sys.launcher.state","1");
+		}
 
         mActivity.onStateSetEnd(state);
         if (state == mBaseState) {
